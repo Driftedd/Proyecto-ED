@@ -13,5 +13,6 @@ public:
     string Condigo;
     List<Ventanilla*>* Ventanillas;
     PriorityQueue<Tiquete*>* Cola;
+    void ClearVentanillas();
     
 };

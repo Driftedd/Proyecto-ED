@@ -16,4 +16,7 @@ public:
     void AgregarServicio(string Descripcion, int Prioridad);
     void AgregarTipoUsuario(string Nombre, int Prioridad);
     void EliminarTipoUsuario();
+    void EliminarServicio();
+    void EliminarArea();
+
 };
