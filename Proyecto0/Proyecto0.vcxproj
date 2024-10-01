@@ -158,6 +158,9 @@
     <ClCompile Include="Proyecto0.cpp" />
     <ClCompile Include="Util\Helpers.cpp" />
     <ClCompile Include="Util\Menu.cpp" />
+    <ClCompile Include="Util\Menu\Menu.cpp" />
+    <ClCompile Include="Util\Menu\Opciones\Funcion.cpp" />
+    <ClCompile Include="Util\Menu\Opciones\Submenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClasesProyecto\Area.h" />
@@ -180,6 +183,10 @@
     <ClInclude Include="Estructuras\Concretas\Node.h" />
     <ClInclude Include="Util\Helpers.h" />
     <ClInclude Include="Util\Menu.h" />
+    <ClInclude Include="Util\Menu\Menu.h" />
+    <ClInclude Include="Util\Menu\Opciones\Funcion.h" />
+    <ClInclude Include="Util\Menu\Opciones\Opcion.h" />
+    <ClInclude Include="Util\Menu\Opciones\Submenu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
