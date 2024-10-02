@@ -5,10 +5,9 @@ template <typename E>
 class Funcion: public Opcion<E>
 {
 public:
-    typedef void (*MenuFunc)(E*);
-    MenuFunc* Delegado;
+    void (*Delegado)(E*);
 
-    Funcion(std::string nombre, MenuFunc* delegado)
+    Funcion(std::string nombre, void (*delegado)(E*))
     {
         this->Nombre = nombre;
         Delegado = delegado;

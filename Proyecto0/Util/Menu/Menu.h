@@ -1,21 +1,26 @@
 ﻿#pragma once
 
-#include <iostream>
-
 #include "../../Estructuras/Abstractas/List.h"
 #include "../../Estructuras/Concretas/ArrayList.h"
 #include "Opciones/Opcion.h"
+#include <iostream>
+
+using std::cout;
+using std::cin;
+using std::endl;
 
 template <typename E> 
 class Menu
 {
 public:
+    std::string Nombre;
     List<Opcion<E>*>* Opciones;
     E* Objeto;
     int ExitValue;
 
-    Menu(E* objeto, int exitValue = 0)
+    Menu(E* objeto, std::string nombre, int exitValue = 0)
     {
+        Nombre = nombre;
         Opciones = new ArrayList<Opcion<E>*>();
         Objeto = objeto;
         ExitValue = exitValue;
@@ -24,13 +29,18 @@ public:
     {
         delete Opciones;
     }
+    void AgregarOpcion(Opcion<E>* opcion)
+    {
+        Opciones->append(opcion);
+    }
 
     int MostrarMenu()
     {
         int SelectedOption = -1;
-        while (SelectedOption < 0 || SelectedOption > Opciones)
+        while (SelectedOption < 0 || SelectedOption > Opciones->getSize())
         {
             int i = 1;
+            cout << Nombre << endl;
             for (Opciones->goToStart(); !Opciones->atEnd(); Opciones->next())
             {
                 std::cout << "\t" << i<<". " << Opciones->getElement()->Nombre << "\n";
@@ -47,7 +57,7 @@ public:
             if (SelectedOption == ExitValue) return -1;
             SelectedOption--;
         }
-        
+        system("cls");
         Opciones->goToPos(SelectedOption);
         Opcion<E>* Seleccionada = Opciones->getElement();
         Seleccionada->Ejecutar(Objeto);
