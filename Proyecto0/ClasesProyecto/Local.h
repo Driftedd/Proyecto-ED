@@ -12,6 +12,7 @@ public:
     List<Servicio*>* Servicios;
     List<TipoUsuario*>* TiposUsuario;
 
+    void MostarEstadoColas();
     void AgregarArea(string Codigo, string Descripcion, int Ventanillas);
     void AgregarServicio(string Descripcion, int Prioridad);
     void AgregarTipoUsuario(string Nombre, int Prioridad);
