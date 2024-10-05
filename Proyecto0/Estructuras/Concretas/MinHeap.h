@@ -14,6 +14,7 @@ private:
 	E* elements;
 	int max;
 	int size;
+	bool isOwner;
 
 	void siftUp(int pos) {
 		while (pos != 0 && elements[pos] < elements[parent(pos)]) {
@@ -53,14 +54,21 @@ private:
 	}
 
 public:
-	MinHeap(int max = DEFAULT_MAX) {
+	MinHeap(int max = DEFAULT_MAX, bool isOwner = false) {
 		if (max < 1)
 			throw runtime_error("Invalid max size.");
 		elements = new E[max];
 		size = 0;
 		this->max = max;
+		this->isOwner = isOwner;
 	}
 	~MinHeap() {
+		if (isOwner && std::is_pointer<E>::value){
+			for (int i = 0; i < size; i++) {
+				elements[i].~E();
+				//delete elements[i];
+			}
+		}
 		delete[] elements;
 	}
 	void insert(E element) {

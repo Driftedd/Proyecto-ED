@@ -1,9 +1,10 @@
 #pragma once
 
-#define DEFAULT_MAX 10
+#define LIST_DEFAULT_MAX 10
 
 #include <stdexcept>
 #include <iostream>
+#include <type_traits>
 #include "../Abstractas/List.h"
 
 using std::runtime_error;
@@ -17,6 +18,7 @@ protected:
 	int max;
 	int size;
 	int pos;
+	bool isOwner;
 
 private:
 	void expand()
@@ -32,15 +34,22 @@ private:
 	}
 	
 public:
-	ArrayList(int max = DEFAULT_MAX) {
+	ArrayList(int max = LIST_DEFAULT_MAX, bool isOwner = false) {
 		if (max < 1)
 			throw runtime_error("Invalid max size.");
 		elements = new E[max];
 		this->max = max;
 		size = 0;
 		pos = 0;
+		this->isOwner = isOwner;
 	}
 	~ArrayList() {
+		if (isOwner && std::is_pointer<E>::value){
+			for (int i = 0; i < size; i++) {
+				delete elements[i];
+			}
+		}
+		
 		delete[] elements;
 	}
 	void insert(E element) {
@@ -116,7 +125,14 @@ public:
 		for (int i = 0; i < size; i++) {
 			if (i == pos)
 				cout << "*";
-			cout << elements[i] << " ";
+			if (std::is_pointer<E>::value)
+			{
+				cout << *elements[i] << " ";	
+			}else
+			{
+				cout << elements[i] << " ";
+			}
+			
 		}
 		if (pos == size)
 			cout << "*";

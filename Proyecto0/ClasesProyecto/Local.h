@@ -11,11 +11,14 @@ public:
     List<Area*>* Areas;
     List<Servicio*>* Servicios;
     List<TipoUsuario*>* TiposUsuario;
+    Local();
+    ~Local();
 
     void MostarEstadoColas();
     void AgregarArea(string Codigo, string Descripcion, int Ventanillas);
     void AgregarServicio(string Descripcion, int Prioridad);
     void AgregarTipoUsuario(string Nombre, int Prioridad);
+    void VaciarTiquetes();
     void EliminarTipoUsuario();
     void EliminarServicio();
     void EliminarArea();

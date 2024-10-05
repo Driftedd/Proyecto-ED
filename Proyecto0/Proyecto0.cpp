@@ -1,6 +1,7 @@
 
 #include "ClasesProyecto/Area.h"
 #include "ClasesProyecto/Local.h"
+#include "Util/Helpers.h"
 #include "Util/Menu/Menu.h"
 #include "Util/Menu/Opciones/Funcion.h"
 #include "Util/Menu/Opciones/Submenu.h"
@@ -11,14 +12,58 @@ using std::cout;
 #pragma region FuncsMenuUsuarios
 void AgregarUsuario(Local* Local)
 {
-    cout<<"Agregar Area"<<endl;
+    string Nombre;
+    cout << "Ingrese el nombre del tipo de usuario: ";
+    cin.ignore();
+    std::getline (std::cin, Nombre);
+
+    int Prioridad = Helpers::GetInt("Ingrese la prioridad: ");
+    Local->AgregarTipoUsuario(Nombre, Prioridad);
+    cout<<"Usuario agregado exitosamente"<<endl;
+    Local->TiposUsuario->print();
+    system("pause");
+    system("cls");
+}
+
+void EliminarUsuario(Local* Local)
+{
+    int i = 1;
+    cout<<"Seleccione un usuario para eliminar"<<endl;
+    bool Cancelado;
+    TipoUsuario* Seleccionado = new TipoUsuario("", -1);
+    Helpers::GetElement(Local->TiposUsuario, Cancelado, Seleccionado);
+    if (Cancelado)
+    {
+        cout<<"Se cancelo la eliminacion"<<endl;
+        system("pause");
+        return;
+    }
+    cout<<"Usuario a eliminar: "<<*Local->TiposUsuario->getElement()<<endl;
+    Local->TiposUsuario->remove();
+    Local->VaciarTiquetes();
+    system("pause");
 }
 #pragma endregion 
 
 #pragma region FuncsMenuAreas
 void AgregarArea(Local* Local)
 {
-    cout<<"Agregar Area"<<endl;
+    string Descripcion;
+    string Codigo;
+
+    cout << "Ingrese la descripcion del area nueva: ";
+    cin.ignore();
+    std::getline (std::cin, Descripcion);
+
+    cout << "Ingrese el codigo del area nueva: ";
+    cin.ignore();
+    std::getline (std::cin, Codigo);
+    
+    int Ventanillas = Helpers::GetInt("Ingrese la cantidad de ventanillas: ");
+    Local->Areas->append(new Area(Descripcion, Codigo, Ventanillas));
+    cout<<"Area agregada exitosamente!"<<endl;
+    system("pause");
+    
 }
 #pragma endregion 
 
@@ -28,22 +73,31 @@ void AgregarArea(Local* Local)
 
 int main()
 {
-    //MenuAreas
-    Submenu<Local>* SubMenuUsuarios = new Submenu<Local>("SubMenu Usuarios");
-    Submenu<Local>* MenuUsuarios = new Submenu<Local>("Menu Usuarios");
-    MenuUsuarios->AgregarOpcion(new Funcion<Local>("Agregar Area", AgregarArea));
-    MenuUsuarios->AgregarOpcion(SubMenuUsuarios);
+    //Administracion
+    
+    //Tipos Usuario
+    Submenu<Local>* AdminUsuarios = new Submenu<Local>("Tipos de Usuario");
+    AdminUsuarios->AgregarOpcion(new Funcion<Local>("Agregar", AgregarUsuario));
+    AdminUsuarios->AgregarOpcion(new Funcion<Local>("Eliminar", EliminarUsuario));
 
+    //Areas
+    Submenu<Local>* AdminAreas = new Submenu<Local>("Areas");
+    AdminAreas->AgregarOpcion(new Funcion<Local>("Agregar", AgregarArea));
+
+    
+    Submenu<Local>* Admin = new Submenu<Local>("Administracion");
+    Admin->AgregarOpcion(AdminUsuarios);
+    Admin->AgregarOpcion(AdminAreas);
+
+    //Menu Principal
     Local* MiLocal = new Local();
     Menu<Local>* MainMenu = new Menu<Local>(MiLocal, "MenuPrincipal");
-    MainMenu->AgregarOpcion(MenuUsuarios);
-    MainMenu->AgregarOpcion(new Funcion<Local>("Agregar Usuario", AgregarUsuario));
+    MainMenu->AgregarOpcion(Admin);
 
     int ResultadoMenu = 0;
     while (ResultadoMenu != -1)
     {
         ResultadoMenu = MainMenu->MostrarMenu();
     }
-    int* a = new int[2];
 }
     

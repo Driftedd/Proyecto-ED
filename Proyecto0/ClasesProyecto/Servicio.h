@@ -1,8 +1,10 @@
 ﻿#pragma once
 #include <string>
+#include <iostream>
 #include "Area.h"
 
 using std::string;
+using std::ostream;
 
 class Servicio
 {
@@ -11,3 +13,8 @@ public:
     int Prioridad;
     Area* MiArea;
 };
+
+inline ostream& operator <<(ostream& os, const Servicio& servicio) {
+    os << "(" << servicio.Nombre << ", " << servicio.Prioridad << ")";
+    return os;
+}

@@ -1,7 +1,9 @@
 ﻿#pragma once
 #include <string>
-
+#include <iostream>
 #include "Tiquete.h"
+
+using std::ostream;
 
 using std::string;
 class Ventanilla
@@ -9,4 +11,14 @@ class Ventanilla
 public:
     string Nombre;
     Tiquete* TiqueteActual;
+
+    Ventanilla(const string& nombre)
+    {
+        Nombre = nombre;
+    }
 };
+
+inline ostream& operator <<(ostream& os, const Ventanilla& ventanilla) {
+    os << "(" << ventanilla.Nombre << ")";
+    return os;
+}

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <stdexcept>
-#include "PriorityQueue.h"
+#include "../Abstractas/PriorityQueue.h"
 #include "MinHeap.h"
 #include "KVPair.h" 
 
@@ -9,10 +8,12 @@ template <typename E>
 class HeapPriorityQueue : public PriorityQueue<E> {
 private:
 	MinHeap<KVPair<int, E>>* pairs;
-
 public:
-	HeapPriorityQueue(int max = DEFAULT_MAX) {
-		pairs = new MinHeap<KVPair<int, E>>(max);
+	HeapPriorityQueue(int max = DEFAULT_MAX, bool isOwner = false) {
+		pairs = new MinHeap<KVPair<int, E>>(max, isOwner);
+	}
+	~HeapPriorityQueue(){
+		delete pairs;
 	}
 	void insert(E element, int priority) {
 		KVPair<int, E> p(priority, element);
