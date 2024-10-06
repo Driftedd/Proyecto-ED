@@ -15,6 +15,7 @@ public:
     Ventanilla(const string& nombre)
     {
         Nombre = nombre;
+        TiqueteActual = nullptr;
     }
 };
 
