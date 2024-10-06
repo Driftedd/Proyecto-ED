@@ -9,6 +9,7 @@
 
 using std::string;
 using std::cout;
+int NumServicios = 0;
 
 void MostrarColas(Local* Local)
 {
@@ -81,6 +82,21 @@ void MostrarEstadisticas(Local* Local)
 }
 
 #pragma region FuncsMenuUsuarios
+void AddServicio(Local* Local) {
+    string ServicioName;
+    cout << "Ingrese el nombre del servicio: ";
+    cin.ignore();
+    std::getline(std::cin, ServicioName);
+    int Prioridad = Helpers::GetInt("Ingrese la prioridad: ");
+    Area* AreaDeServicio = Local->getAreaPos(NumServicios);
+
+    
+
+    Local->AgregarServicio(ServicioName, Prioridad,AreaDeServicio);
+    NumServicios++;
+    cout << "Servicio agregado exitosamente" << endl;
+    Local->Servicios->print();
+}
 void AgregarUsuario(Local* Local)
 {
     string Nombre;
@@ -113,6 +129,11 @@ void EliminarUsuario(Local* Local)
     Local->TiposUsuario->remove();
     Local->VaciarTiquetes();
     system("pause");
+}
+
+void ModificarCantidadVentanillas(Local* Local)
+{
+    Local->ModificarCantidadVentanillas();
 }
 #pragma endregion 
 
@@ -150,13 +171,19 @@ int main()
     AdminUsuarios->AgregarOpcion(new Funcion<Local>("Agregar", AgregarUsuario));
     AdminUsuarios->AgregarOpcion(new Funcion<Local>("Eliminar", EliminarUsuario));
 
+    //Servicios
+    Submenu<Local>* AdminServicios = new Submenu<Local>("Servicios");
+    AdminServicios->AgregarOpcion(new Funcion<Local>("Agregar", AddServicio));
+
     //Areas
     Submenu<Local>* AdminAreas = new Submenu<Local>("Areas");
     AdminAreas->AgregarOpcion(new Funcion<Local>("Agregar", AgregarArea));
+    AdminAreas->AgregarOpcion(new Funcion<Local>("Modificar Ventanillas", ModificarCantidadVentanillas));
     
     Submenu<Local>* Admin = new Submenu<Local>("Administracion");
     Admin->AgregarOpcion(AdminUsuarios);
     Admin->AgregarOpcion(AdminAreas);
+    Admin->AgregarOpcion(AdminServicios);
 
     //Menu Principal
     Local* MiLocal = new Local();

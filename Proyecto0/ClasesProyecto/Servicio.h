@@ -21,6 +21,12 @@ public:
         MiArea = nullptr;
         Solicitados = 0;
     }
+    
+    Servicio(const string& nombre, int prioridad, Area* miArea){
+        Nombre=nombre;
+        Prioridad=prioridad;
+        MiArea=miArea;
+    }
     Servicio* Solicitar()
     {
         Solicitados++;
@@ -29,6 +35,6 @@ public:
 };
 
 inline ostream& operator <<(ostream& os, const Servicio& servicio) {
-    os << "(" << servicio.Nombre << ", " << servicio.Prioridad << ")";
+    os << "(" << servicio.Nombre << ", " << servicio.Prioridad << ", " << servicio.MiArea->Descripcion<<")";
     return os;
 }
