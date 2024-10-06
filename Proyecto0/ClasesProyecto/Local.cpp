@@ -1,5 +1,6 @@
 ﻿#include "Local.h"
 
+#include "Stats.h"
 #include "../Estructuras/Concretas/ArrayList.h"
 
 Local::Local()
@@ -48,3 +49,9 @@ void Local::VaciarTiquetes()
         //Areas->getElement()->Cola->clear();    
     }
 }
+
+Stats Local::GetEstadisticas()
+{
+    return Stats(this);
+}
+

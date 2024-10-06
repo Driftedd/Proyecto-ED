@@ -10,11 +10,22 @@ public:
     string Codigo;
     int PrioridadFinal;
     time_t Creado;
+    time_t Atendido;
 
     Tiquete(string Codigo, int PU, int PS)
     {
         PrioridadFinal = PU * 10 + PS;
         this->Codigo = Codigo;
         Creado = std::time(nullptr);
+    }
+
+    void Atender()
+    {
+        Atendido = std::time(nullptr);
+    }
+
+    float getTiempoEspera()
+    {
+        return (float)difftime(Creado, Atendido);
     }
 };

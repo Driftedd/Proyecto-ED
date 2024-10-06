@@ -16,6 +16,7 @@ public:
     string Codigo;
     List<Ventanilla*>* Ventanillas;
     PriorityQueue<Tiquete*>* Cola;
+    int Dispensados;
 
     Area(const string& descripcion, const string& codigo, int ventanillas)
     {
@@ -27,11 +28,18 @@ public:
             Ventanillas->append(new Ventanilla(codigo + std::to_string(i+1)));
         }
         Cola = new HeapPriorityQueue<Tiquete*>(10, true);
+        
+        Dispensados = 0;
     }
     ~Area()
     {
         delete Ventanillas;
         delete Cola;
+    }
+    void AgregarTiquete(Tiquete* tiquete)
+    {
+        Cola->insert(tiquete, tiquete->PrioridadFinal);
+        Dispensados++;
     }
     void ClearVentanillas()
     {
