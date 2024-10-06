@@ -59,6 +59,11 @@ void EliminarUsuario(Local* Local)
     Local->VaciarTiquetes();
     system("pause");
 }
+
+void ModificarCantidadVentanillas(Local* Local)
+{
+    Local->ModificarCantidadVentanillas();
+}
 #pragma endregion 
 
 #pragma region FuncsMenuAreas
@@ -103,6 +108,7 @@ int main()
     //Areas
     Submenu<Local>* AdminAreas = new Submenu<Local>("Areas");
     AdminAreas->AgregarOpcion(new Funcion<Local>("Agregar", AgregarArea));
+    AdminAreas->AgregarOpcion(new Funcion<Local>("Modificar Ventanillas", ModificarCantidadVentanillas));
 
     
     Submenu<Local>* Admin = new Submenu<Local>("Administracion");

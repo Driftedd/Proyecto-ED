@@ -23,5 +23,6 @@ public:
     void EliminarServicio();
     void EliminarArea();
     Area* getAreaPos(int Lugar);
+    void ModificarCantidadVentanillas();
 
 };
