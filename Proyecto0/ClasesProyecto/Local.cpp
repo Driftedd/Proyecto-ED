@@ -39,6 +39,15 @@ void Local::AgregarTipoUsuario(string Nombre, int Prioridad)
 {
     TiposUsuario->append(new TipoUsuario(Nombre, Prioridad));
 }
+void Local::AgregarServicio(string Nombre, int Prioridad, Area* miArea)
+{
+    Servicios->append(new Servicio(Nombre, Prioridad, miArea));
+}
+
+Area* Local::getAreaPos(int Lugar) {
+    Areas->goToPos(Lugar);
+    return Areas->getElement();
+}
 
 void Local::VaciarTiquetes()
 {

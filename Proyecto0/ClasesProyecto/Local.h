@@ -16,11 +16,12 @@ public:
 
     void MostarEstadoColas();
     void AgregarArea(string Codigo, string Descripcion, int Ventanillas);
-    void AgregarServicio(string Descripcion, int Prioridad);
+    void AgregarServicio(string Descripcion, int Prioridad,Area* miArea);
     void AgregarTipoUsuario(string Nombre, int Prioridad);
     void VaciarTiquetes();
     void EliminarTipoUsuario();
     void EliminarServicio();
     void EliminarArea();
+    Area* getAreaPos(int Lugar);
 
 };

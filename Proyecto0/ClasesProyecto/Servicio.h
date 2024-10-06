@@ -12,6 +12,13 @@ public:
     string Nombre;
     int Prioridad;
     Area* MiArea;
+    
+    Servicio(const string& nombre, int prioridad, Area* miArea){
+        Nombre=nombre;
+        Prioridad=prioridad;
+        MiArea=miArea;
+    
+    }
 };
 
 inline ostream& operator <<(ostream& os, const Servicio& servicio) {
