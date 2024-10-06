@@ -22,6 +22,6 @@ public:
 };
 
 inline ostream& operator <<(ostream& os, const Servicio& servicio) {
-    os << "(" << servicio.Nombre << ", " << servicio.Prioridad << ")";
+    os << "(" << servicio.Nombre << ", " << servicio.Prioridad << ", " << servicio.MiArea<<")";
     return os;
 }

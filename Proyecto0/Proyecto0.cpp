@@ -23,6 +23,8 @@ void AddServicio(Local* Local) {
 
     Local->AgregarServicio(ServicioName, Prioridad,AreaDeServicio);
     NumServicios++;
+    cout << "Servicio agregado exitosamente" << endl;
+    Local->Areas->print();
 }
 void AgregarUsuario(Local* Local)
 {
