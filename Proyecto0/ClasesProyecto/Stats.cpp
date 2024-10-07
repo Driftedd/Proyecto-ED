@@ -9,7 +9,10 @@ float Stats::getTiempoEsperaPromedioEnArea(Area* area)
     {
         auto VActual = area->Ventanillas->getElement();
         TiquetesAtendidos += (float) VActual->Atendidos;
-        TiempoTotal+= VActual->TiqueteActual->getTiempoEspera();
+        if (VActual->TiqueteActual)
+        {
+            TiempoTotal+= VActual->TiqueteActual->getTiempoEspera();    
+        }
     }
     return TiempoTotal/TiquetesAtendidos;
 }

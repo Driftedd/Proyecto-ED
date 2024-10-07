@@ -1,8 +1,10 @@
 ﻿#pragma once
 #include <string>
 #include <chrono>
+#include <iostream>
 
 using std::string;
+using std::ostream;
 
 class Tiquete
 {
@@ -29,3 +31,8 @@ public:
         return (float)difftime(Creado, Atendido);
     }
 };
+
+inline ostream& operator <<(ostream& os, const Tiquete& tiquete) {
+    os << "(" << tiquete.Codigo << ", " << tiquete.PrioridadFinal << ", " << tiquete.Creado<<")";
+    return os;
+}

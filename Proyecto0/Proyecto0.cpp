@@ -17,6 +17,10 @@ void MostrarColas(Local* Local)
     {
         Area* AActual = Local->Areas->getElement();
         cout<<AActual->Descripcion<< ", Ventanillas: "<<AActual->Ventanillas->getSize()<<endl;
+
+        cout<<"Cola: ";
+        AActual->Cola->print();
+        cout<<"Ventanillas: ";
         for (AActual->Ventanillas->goToStart(); !AActual->Ventanillas->atEnd(); AActual->Ventanillas->next())
         {
             Ventanilla* VActual = AActual->Ventanillas->getElement();
@@ -25,6 +29,36 @@ void MostrarColas(Local* Local)
     }
     system("pause");
     system("cls");
+}
+
+void GenerarTiquete(Local* Local)
+{
+    
+    TipoUsuario* usuario = nullptr;
+    Servicio* servicio = nullptr;
+    bool Cancelado;
+    Helpers::GetElement<TipoUsuario*>(Local->TiposUsuario, Cancelado, usuario);
+    Helpers::GetElement<Servicio*>(Local->Servicios, Cancelado, servicio);
+    if (Cancelado)
+    {
+        cout<<"Accion Cancelada"<<endl;
+        system("pause");
+        system("cls");
+    }
+    try
+    {
+        auto tiquete = Local->AgregarTiquete(servicio, usuario);
+        cout<<"Tiquete creado exitosamente"<<endl;
+        cout<<*tiquete<<endl;
+    }
+    catch (...)
+    {
+        cout<<"No se pudo crear el tiquete";
+    }
+    
+    system("pause");
+    system("cls");
+    
 }
 
 void MostrarEstadisticas(Local* Local)
@@ -189,6 +223,7 @@ int main()
     Local* MiLocal = new Local();
     Menu<Local>* MainMenu = new Menu<Local>(MiLocal, "MenuPrincipal");
     MainMenu->AgregarOpcion(new Funcion<Local>("Estado de las Colas", MostrarColas));
+    MainMenu->AgregarOpcion(new Funcion<Local>("Conseguir Tiquete", GenerarTiquete));
     MainMenu->AgregarOpcion(Admin);
     MainMenu->AgregarOpcion(new Funcion<Local>("Estadisticas del sistema", MostrarEstadisticas));
     
