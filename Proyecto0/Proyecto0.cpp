@@ -38,12 +38,20 @@ void GenerarTiquete(Local* Local)
     Servicio* servicio = nullptr;
     bool Cancelado;
     Helpers::GetElement<TipoUsuario*>(Local->TiposUsuario, Cancelado, usuario);
+    if (Cancelado)
+    {
+        cout<<"Accion Cancelada"<<endl;
+        system("pause");
+        system("cls");
+        return;
+    }
     Helpers::GetElement<Servicio*>(Local->Servicios, Cancelado, servicio);
     if (Cancelado)
     {
         cout<<"Accion Cancelada"<<endl;
         system("pause");
         system("cls");
+        return;
     }
     try
     {
@@ -59,6 +67,41 @@ void GenerarTiquete(Local* Local)
     system("pause");
     system("cls");
     
+}
+
+void Atender(Local* Local)
+{
+    bool Cancelado;
+    Area* area = nullptr;
+    cout<<"Seleccione un area a utilizar"<<endl;
+    Helpers::GetElement(Local->Areas, Cancelado, area);
+    if (Cancelado)
+    {
+        system("pause");
+        system("cls");
+        return;
+    }
+    
+    Ventanilla* ventanilla = nullptr;
+    cout<<"Seleccione una ventanilla"<<endl;
+    Helpers::GetElement(area->Ventanillas, Cancelado, ventanilla);
+    if (Cancelado)
+    {
+        system("pause");
+        system("cls");
+        return;
+    }
+    
+    try
+    {
+        area->AtenderSiguiente(ventanilla);    
+    }
+    catch (...)
+    {
+        cout<<"La cola esta vacia"<<endl;
+    }
+    system("pause");
+    system("cls");
 }
 
 void MostrarEstadisticas(Local* Local)
@@ -224,10 +267,10 @@ int main()
     Menu<Local>* MainMenu = new Menu<Local>(MiLocal, "MenuPrincipal");
     MainMenu->AgregarOpcion(new Funcion<Local>("Estado de las Colas", MostrarColas));
     MainMenu->AgregarOpcion(new Funcion<Local>("Conseguir Tiquete", GenerarTiquete));
+    MainMenu->AgregarOpcion(new Funcion<Local>("Atender", Atender));
     MainMenu->AgregarOpcion(Admin);
     MainMenu->AgregarOpcion(new Funcion<Local>("Estadisticas del sistema", MostrarEstadisticas));
     
-
     int ResultadoMenu = 0;
     while (ResultadoMenu != -1)
     {

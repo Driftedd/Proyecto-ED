@@ -41,9 +41,20 @@ public:
         Cola->insert(tiquete, tiquete->PrioridadFinal);
         Dispensados++;
     }
-    void ClearVentanillas()
+    void ClearCola()
     {
-        
+        Cola->clear();
+    }
+    void AtenderSiguiente(Ventanilla* ventanilla)
+    {
+        try
+        {
+            auto siguiente = Cola->removeMin();
+            ventanilla->Atender(siguiente);
+        }
+        catch (...)
+        {
+        }
     }
     
 };

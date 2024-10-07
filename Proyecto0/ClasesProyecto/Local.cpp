@@ -68,8 +68,7 @@ void Local::VaciarTiquetes()
 {
     for(Areas->goToStart(); !Areas->atEnd(); Areas->next())
     {
-        Areas->getElement()->ClearVentanillas();
-        //Areas->getElement()->Cola->clear();    
+        Areas->getElement()->ClearCola();
     }
 }
 
