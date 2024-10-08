@@ -1,6 +1,4 @@
 ﻿#include "Local.h"
-
-#include "Stats.h"
 #include "../Estructuras/Concretas/ArrayList.h"
 
 Local::Local()
@@ -12,22 +10,28 @@ Local::Local()
 
 Local::~Local()
 {
+    /*
     for (int i = 0;i<Servicios->getSize();i++)
     {
         delete Servicios->remove();    
     }
+    */
     delete Servicios;
-    
+
+    /*
     for (int i = 0;i<Areas->getSize();i++)
     {
         delete Areas->remove();    
     }
+    */
     delete Areas;
-    
+
+    /*
     for (int i = 0;i<TiposUsuario->getSize();i++)
     {
         delete TiposUsuario->remove();    
     }
+    */
     delete TiposUsuario;
 }
 
@@ -50,7 +54,11 @@ Tiquete* Local::AgregarTiquete(Servicio* servicio, TipoUsuario* usuario)
     string Codigo = servicio->MiArea->Codigo + std::to_string(Contador);
     Contador++;
     Tiquete* NuevoTiquete = new Tiquete(Codigo, usuario->Prioridad, servicio->Prioridad);
-    servicio->MiArea->Cola->insert(NuevoTiquete, NuevoTiquete->PrioridadFinal);
+    servicio->MiArea->AgregarTiquete(NuevoTiquete);
+    //servicio->MiArea->Cola->insert(NuevoTiquete, NuevoTiquete->PrioridadFinal);
+    
+    servicio->Solicitados++;
+    usuario->Emitidos++;
     return NuevoTiquete;
 }
 
@@ -70,11 +78,6 @@ void Local::VaciarTiquetes()
     {
         Areas->getElement()->ClearCola();
     }
-}
-
-Stats Local::GetEstadisticas()
-{
-    return Stats(this);
 }
 
 void Local::ModificarCantidadVentanillas() {

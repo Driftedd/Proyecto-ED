@@ -20,7 +20,7 @@ public:
     Submenu(std::string Nombre, int exitValue = 0)
     {
         this->Nombre = Nombre;
-        Opciones = new ArrayList<Opcion<E>*>();
+        Opciones = new ArrayList<Opcion<E>*>(10, true);
         ExitValue = exitValue;   
     }
     ~Submenu()

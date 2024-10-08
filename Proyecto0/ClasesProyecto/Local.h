@@ -4,8 +4,6 @@
 #include "TipoUsuario.h"
 #include "../Estructuras/Abstractas/List.h"
 
-class Stats;
-
 class Local
 {
 public:
@@ -27,7 +25,5 @@ public:
     void EliminarArea();
     Area* getAreaPos(int Lugar);
     void ModificarCantidadVentanillas();
-
-    Stats GetEstadisticas();
 
 };

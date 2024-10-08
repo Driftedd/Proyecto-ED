@@ -21,7 +21,7 @@ public:
     Menu(E* objeto, std::string nombre, int exitValue = 0)
     {
         Nombre = nombre;
-        Opciones = new ArrayList<Opcion<E>*>();
+        Opciones = new ArrayList<Opcion<E>*>(10, true);
         Objeto = objeto;
         ExitValue = exitValue;
     }
