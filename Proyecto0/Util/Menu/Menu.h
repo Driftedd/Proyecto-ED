@@ -9,6 +9,11 @@ using std::cout;
 using std::cin;
 using std::endl;
 
+/*
+ * Menu: Esta clase se utiliza como la base del menu, tiene un arreglo de opciones,
+ * dependiendo de la opción que se escoja se selecciona y se llama a su función Opcion::Ejecutar()
+ */
+
 template <typename E> 
 class Menu
 {

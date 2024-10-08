@@ -4,6 +4,12 @@
 #include <type_traits>
 #include <string>
 
+/*
+ * Helpers: Clase estática que sirve como biblioteca de funciones que pueden ser utiles, set utilizó principalmente
+ * para encapsular funciones que consiguen datos del usuario, note que las funciones son estaticas, permitiendo su
+ * utilización sin la necesidad de instanciar un objeto Helper.
+ */
+
 class Helpers
 {
 public:
