@@ -72,6 +72,16 @@ public:
         auto siguiente = Cola->removeMin();
         ventanilla->Atender(siguiente);
     }
+    void VaciarVentanillas() {
+        if (Ventanillas != nullptr) {
+            for (int i = 0; i < Ventanillas->getSize(); i++) {
+                Ventanillas->goToPos(i);
+                Ventanilla* ventanilla = Ventanillas->getElement();
+                delete ventanilla;
+            }
+            Ventanillas->clear();
+        }
+    }
     
 };
 

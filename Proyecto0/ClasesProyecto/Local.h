@@ -30,5 +30,5 @@ public:
     void EliminarArea();
     Area* getAreaPos(int Lugar);
     void ModificarCantidadVentanillas();
-
+    void EliminarAreas();
 };

@@ -5,6 +5,7 @@
 #include "Util/Menu/Menu.h"
 #include "Util/Menu/Opciones/Funcion.h"
 #include "Util/Menu/Opciones/Submenu.h"
+#include <limits>
 
 /*
  * En este archivo se encuentra el punto de entrada al proyecto, donde se inicializa el Local y el Menu.
@@ -180,22 +181,19 @@ void AddServicio(Local* Local) {
         Area* area = Local->Areas->getElement();
         std::cout << i + 1 << ". " << area->Descripcion << std::endl;
     }
-    
-    
     cout << "Ingrese la posicion del area que desea prestar al servicio: ";
     int PosArea = Helpers::GetInt();
-    
-    Local->Areas->goToPos(PosArea-1);
+    Local->Areas->goToPos(PosArea - 1);
     Area* AreaDeServicio = Local->Areas->getElement();
-    
-
-    Local->AgregarServicio(ServicioName, Prioridad,AreaDeServicio);
+    Local->AgregarServicio(ServicioName, Prioridad, AreaDeServicio);
     NumServicios++;
     cout << "Servicio agregado exitosamente" << endl;
     Local->Servicios->print();
     system("pause");
     system("cls");
 }
+
+
 void AgregarUsuario(Local* Local)
 {
     string Nombre;
@@ -219,20 +217,37 @@ void DelServicio(Local* Local) {
     int i = 1;
     cout << "Seleccione un servicio para eliminar" << endl;
     bool Cancelado;
-    Servicio* Seleccionado = new Servicio("", -1,nullptr);
+    Servicio* Seleccionado = new Servicio("", -1, nullptr);
     Helpers::GetElement(Local->Servicios, Cancelado, Seleccionado);
     if (Cancelado)
     {
         cout << "Se cancelo la eliminacion" << endl;
-        system("pause");
-        return;
+        if (Local->Servicios->getSize() > 0) {
+            cout << "Seleccione un servicio para eliminar:" << endl;
+            bool Cancelado;
+            Servicio* Seleccionado = new Servicio("", -1, Local->Areas->getElement());
+            Helpers::GetElement(Local->Servicios, Cancelado, Seleccionado);
+            if (Cancelado) {
+                cout << "Se canceló la eliminación." << endl;
+                system("pause");
+                delete Seleccionado;
+                return;
+            }
+            cout << "Servicio a eliminar: " << *Local->Servicios->getElement() << endl;
+            Local->Servicios->remove();
+            Local->VaciarTiquetes();
+            NumServicios--;
+            system("pause");
+            delete Seleccionado;
+        }
+        else {
+            cout << "No hay servicios disponibles para eliminar." << endl;
+            system("pause");
+            system("cls");
+        }
     }
-    cout << "Usuario a eliminar: " << *Local->Servicios->getElement() << endl;
-    Local->Servicios->remove();
-    Local->VaciarTiquetes();
-    NumServicios--;
-    system("pause");
 }
+
 void MoverServicios(Local* Local) {
     for (int i = 0; i < Local->Servicios->getSize(); i++) {
         Local->Servicios->goToPos(i);
@@ -319,13 +334,80 @@ void AgregarArea(Local* Local)
 
     cout << "Ingrese el codigo del area nueva: ";
     std::getline (std::cin, Codigo);
-    
     int Ventanillas = Helpers::GetInt("Ingrese la cantidad de ventanillas: ");
     Local->Areas->append(new Area(Descripcion, Codigo, Ventanillas));
     cout<<"Area agregada exitosamente!"<<endl;
     system("pause");
-    
 }
+
+void EliminarArea(Local* Local) {
+    if (Local->Areas->getSize() > 0) {
+        cout << "Seleccione el area que desea eliminar: " << endl;
+        for (int i = 0; i < Local->Areas->getSize(); i++) {
+            Local->Areas->goToPos(i);
+            Area* area = Local->Areas->getElement();
+            cout << i + 1 << ". " << area->Descripcion << endl;
+        }
+        cin.clear();
+        while (cin.get() != '\n');
+        int AreaSeleccionada = Helpers::GetInt("Ingrese el número del área: ");
+        Local->Areas->goToPos(AreaSeleccionada - 1);
+        Area* AreaParaBorrar = Local->Areas->getElement();
+        string serviciosAsociados = "";
+        for (int i = 0; i < Local->Servicios->getSize(); i++) {
+            Local->Servicios->goToPos(i);
+            Servicio* servicio = Local->Servicios->getElement();
+            if (servicio->MiArea == AreaParaBorrar) {
+                if (serviciosAsociados == "") {
+                    serviciosAsociados += servicio->Nombre;
+                }
+                else {
+                    serviciosAsociados += ", " + servicio->Nombre + " ";
+                }
+            }
+        }
+        if (serviciosAsociados != "") {
+            char respuesta;
+            do {
+                cout << "Si borra ese area, se borraran tambien los siguientes servicios: " << serviciosAsociados << endl << "¿Está seguro? (Y/N): ";
+                cin >> respuesta;
+                respuesta = toupper(respuesta);
+            } while (respuesta != 'Y' && respuesta != 'N');
+            if (respuesta == 'Y') {
+                for (int i = 0; i < Local->Servicios->getSize(); i++) {
+                    Local->Servicios->goToPos(i);
+                    Servicio* servicio = Local->Servicios->getElement();
+                    if (servicio->MiArea == AreaParaBorrar) {
+                        Local->Servicios->goToPos(i);
+                        Local->Servicios->remove();
+                    }
+                }
+                AreaParaBorrar->VaciarVentanillas();
+                Local->Areas->remove();
+                cout << "Área eliminada exitosamente." << endl;
+                system("pause");
+                system("cls");
+            }
+            else {
+                cout << "Operación cancelada." << endl;
+                system("pause");
+                system("cls");
+            }
+        }
+        else {
+            Local->Areas->remove();
+            cout << "Área eliminada exitosamente." << endl;
+        }
+    }
+    else {
+        cout << "No hay áreas." << endl;
+        system("pause");
+        system("cls");
+    }
+}
+
+
+
 #pragma endregion 
 
 int main()
@@ -347,6 +429,7 @@ int main()
     Submenu<Local>* AdminAreas = new Submenu<Local>("Areas");
     AdminAreas->AgregarOpcion(new Funcion<Local>("Agregar", AgregarArea));
     AdminAreas->AgregarOpcion(new Funcion<Local>("Modificar Ventanillas", ModificarCantidadVentanillas));
+    AdminAreas->AgregarOpcion(new Funcion<Local>("Eliminar", EliminarArea));
     
     Submenu<Local>* Admin = new Submenu<Local>("Administracion");
     Admin->AgregarOpcion(AdminUsuarios);
