@@ -13,9 +13,10 @@ public:
     int Emitidos;
 
     TipoUsuario(const string& nombre, int prioridad)
-        : Nombre(nombre),
-          Prioridad(prioridad)
     {
+        Nombre = nombre;
+        Prioridad = prioridad;
+        Emitidos = 0;
     }
     
     TipoUsuario* Emitir()

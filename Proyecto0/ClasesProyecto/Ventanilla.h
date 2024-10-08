@@ -12,12 +12,19 @@ public:
     string Nombre;
     Tiquete* TiqueteActual;
     int Atendidos;
+    float TiempoEspera;
 
     Ventanilla(const string& nombre)
     {
         Nombre = nombre;
         TiqueteActual = nullptr;
         Atendidos = 0;
+        TiempoEspera = 0.f;
+    }
+
+    ~Ventanilla()
+    {
+        delete TiqueteActual;
     }
 
     void Atender(Tiquete* tiquete)
@@ -25,6 +32,7 @@ public:
         delete TiqueteActual;
         TiqueteActual = tiquete;
         TiqueteActual->Atender();
+        TiempoEspera += TiqueteActual->getTiempoEspera();
         Atendidos++;
     }
 };

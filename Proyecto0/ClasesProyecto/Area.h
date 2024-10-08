@@ -45,16 +45,32 @@ public:
     {
         Cola->clear();
     }
+    float GetTiempoEsperaTotal()
+    {
+        float Resultado = 0.f;
+        for (Ventanillas->goToStart(); !Ventanillas->atEnd(); Ventanillas->next())
+        {
+            Resultado += Ventanillas->getElement()->TiempoEspera;
+        }
+        return Resultado;
+    }
+    int GetTotalAtendidos()
+    {
+        int Resultado = 0;
+        for (Ventanillas->goToStart(); !Ventanillas->atEnd(); Ventanillas->next())
+        {
+            Resultado += Ventanillas->getElement()->Atendidos;
+        }
+        return Resultado;
+    }
+    float GetEsperaPromedio()
+    {
+        return GetTiempoEsperaTotal()/((float)GetTotalAtendidos());
+    }
     void AtenderSiguiente(Ventanilla* ventanilla)
     {
-        try
-        {
-            auto siguiente = Cola->removeMin();
-            ventanilla->Atender(siguiente);
-        }
-        catch (...)
-        {
-        }
+        auto siguiente = Cola->removeMin();
+        ventanilla->Atender(siguiente);
     }
     
 };

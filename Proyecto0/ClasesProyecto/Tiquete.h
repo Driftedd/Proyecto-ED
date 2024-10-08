@@ -28,11 +28,11 @@ public:
 
     float getTiempoEspera()
     {
-        return (float)difftime(Creado, Atendido);
+        return (float)difftime(Atendido, Creado);
     }
 };
 
 inline ostream& operator <<(ostream& os, const Tiquete& tiquete) {
-    os << "(" << tiquete.Codigo << ", " << tiquete.PrioridadFinal << ", " << tiquete.Creado<<")";
+    os << "(" << tiquete.Codigo << ", " << tiquete.PrioridadFinal << ", " <<")";
     return os;
 }

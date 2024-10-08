@@ -1,7 +1,6 @@
 
 #include "ClasesProyecto/Area.h"
 #include "ClasesProyecto/Local.h"
-#include "ClasesProyecto/Stats.h"
 #include "Util/Helpers.h"
 #include "Util/Menu/Menu.h"
 #include "Util/Menu/Opciones/Funcion.h"
@@ -20,12 +19,13 @@ void MostrarColas(Local* Local)
 
         cout<<"Cola: ";
         AActual->Cola->print();
-        cout<<"Ventanillas: ";
+        cout<<"Ventanillas: "<<endl;
         for (AActual->Ventanillas->goToStart(); !AActual->Ventanillas->atEnd(); AActual->Ventanillas->next())
         {
             Ventanilla* VActual = AActual->Ventanillas->getElement();
             cout<<"\t"<<VActual->Nombre<<": "<<(VActual->TiqueteActual ? VActual->TiqueteActual->Codigo : "Sin Tiquete")<<endl;
         }
+        cout<<"-------------------------------"<<endl;
     }
     system("pause");
     system("cls");
@@ -94,7 +94,8 @@ void Atender(Local* Local)
     
     try
     {
-        area->AtenderSiguiente(ventanilla);    
+        area->AtenderSiguiente(ventanilla);
+        cout<<"Atendiendo: "<<*ventanilla->TiqueteActual<<" en ventanilla: "<<ventanilla->Nombre<<endl;
     }
     catch (...)
     {
@@ -107,13 +108,12 @@ void Atender(Local* Local)
 void MostrarEstadisticas(Local* Local)
 {
     cout<<"Estadisticas"<<endl;
-    Stats stats = Local->GetEstadisticas();
     
     cout<<"Tiempo promedio de espera: "<<endl;
     for (Local->Areas->goToStart(); !Local->Areas->atEnd(); Local->Areas->next())
     {
         auto AActual = Local->Areas->getElement();
-        cout<<AActual->Descripcion<<": "<<stats.getTiempoEsperaPromedioEnArea(AActual)<<endl;
+        cout<<AActual->Descripcion<<": "<<AActual->GetEsperaPromedio()<<endl;
     }
     cout<<endl;
     
