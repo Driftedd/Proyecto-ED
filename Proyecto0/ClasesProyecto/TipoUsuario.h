@@ -10,11 +10,18 @@ class TipoUsuario
 public:
     string Nombre;
     int Prioridad;
+    int Emitidos;
 
     TipoUsuario(const string& nombre, int prioridad)
         : Nombre(nombre),
           Prioridad(prioridad)
     {
+    }
+    
+    TipoUsuario* Emitir()
+    {
+        Emitidos++;
+        return this;
     }
 };
 

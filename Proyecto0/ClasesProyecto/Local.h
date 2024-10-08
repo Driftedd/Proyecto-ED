@@ -4,6 +4,8 @@
 #include "TipoUsuario.h"
 #include "../Estructuras/Abstractas/List.h"
 
+class Stats;
+
 class Local
 {
 public:
@@ -18,11 +20,14 @@ public:
     void AgregarArea(string Codigo, string Descripcion, int Ventanillas);
     void AgregarServicio(string Descripcion, int Prioridad,Area* miArea);
     void AgregarTipoUsuario(string Nombre, int Prioridad);
+    Tiquete* AgregarTiquete(Servicio* servicio, TipoUsuario* usuario);
     void VaciarTiquetes();
     void EliminarTipoUsuario();
     void EliminarServicio();
     void EliminarArea();
     Area* getAreaPos(int Lugar);
     void ModificarCantidadVentanillas();
+
+    Stats GetEstadisticas();
 
 };

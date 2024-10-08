@@ -1,6 +1,7 @@
 
 #include "ClasesProyecto/Area.h"
 #include "ClasesProyecto/Local.h"
+#include "ClasesProyecto/Stats.h"
 #include "Util/Helpers.h"
 #include "Util/Menu/Menu.h"
 #include "Util/Menu/Opciones/Funcion.h"
@@ -9,6 +10,153 @@
 using std::string;
 using std::cout;
 int NumServicios = 0;
+
+void MostrarColas(Local* Local)
+{
+    for (Local->Areas->goToStart(); !Local->Areas->atEnd(); Local->Areas->next())
+    {
+        Area* AActual = Local->Areas->getElement();
+        cout<<AActual->Descripcion<< ", Ventanillas: "<<AActual->Ventanillas->getSize()<<endl;
+
+        cout<<"Cola: ";
+        AActual->Cola->print();
+        cout<<"Ventanillas: ";
+        for (AActual->Ventanillas->goToStart(); !AActual->Ventanillas->atEnd(); AActual->Ventanillas->next())
+        {
+            Ventanilla* VActual = AActual->Ventanillas->getElement();
+            cout<<"\t"<<VActual->Nombre<<": "<<(VActual->TiqueteActual ? VActual->TiqueteActual->Codigo : "Sin Tiquete")<<endl;
+        }
+    }
+    system("pause");
+    system("cls");
+}
+
+void GenerarTiquete(Local* Local)
+{
+    
+    TipoUsuario* usuario = nullptr;
+    Servicio* servicio = nullptr;
+    bool Cancelado;
+    Helpers::GetElement<TipoUsuario*>(Local->TiposUsuario, Cancelado, usuario);
+    if (Cancelado)
+    {
+        cout<<"Accion Cancelada"<<endl;
+        system("pause");
+        system("cls");
+        return;
+    }
+    Helpers::GetElement<Servicio*>(Local->Servicios, Cancelado, servicio);
+    if (Cancelado)
+    {
+        cout<<"Accion Cancelada"<<endl;
+        system("pause");
+        system("cls");
+        return;
+    }
+    try
+    {
+        auto tiquete = Local->AgregarTiquete(servicio, usuario);
+        cout<<"Tiquete creado exitosamente"<<endl;
+        cout<<*tiquete<<endl;
+    }
+    catch (...)
+    {
+        cout<<"No se pudo crear el tiquete";
+    }
+    
+    system("pause");
+    system("cls");
+    
+}
+
+void Atender(Local* Local)
+{
+    bool Cancelado;
+    Area* area = nullptr;
+    cout<<"Seleccione un area a utilizar"<<endl;
+    Helpers::GetElement(Local->Areas, Cancelado, area);
+    if (Cancelado)
+    {
+        system("pause");
+        system("cls");
+        return;
+    }
+    
+    Ventanilla* ventanilla = nullptr;
+    cout<<"Seleccione una ventanilla"<<endl;
+    Helpers::GetElement(area->Ventanillas, Cancelado, ventanilla);
+    if (Cancelado)
+    {
+        system("pause");
+        system("cls");
+        return;
+    }
+    
+    try
+    {
+        area->AtenderSiguiente(ventanilla);    
+    }
+    catch (...)
+    {
+        cout<<"La cola esta vacia"<<endl;
+    }
+    system("pause");
+    system("cls");
+}
+
+void MostrarEstadisticas(Local* Local)
+{
+    cout<<"Estadisticas"<<endl;
+    Stats stats = Local->GetEstadisticas();
+    
+    cout<<"Tiempo promedio de espera: "<<endl;
+    for (Local->Areas->goToStart(); !Local->Areas->atEnd(); Local->Areas->next())
+    {
+        auto AActual = Local->Areas->getElement();
+        cout<<AActual->Descripcion<<": "<<stats.getTiempoEsperaPromedioEnArea(AActual)<<endl;
+    }
+    cout<<endl;
+    
+    cout<<"Tiquetes dispensados por area: "<<endl;
+    for (Local->Areas->goToStart(); !Local->Areas->atEnd(); Local->Areas->next())
+    {
+        auto AActual = Local->Areas->getElement();
+        cout<<AActual->Descripcion<<": "<<AActual->Dispensados<<endl;
+    }
+    cout<<endl;
+
+    cout<<"Tiquetes atendidos por ventanilla: "<<endl;
+    for (Local->Areas->goToStart(); !Local->Areas->atEnd(); Local->Areas->next())
+    {
+        auto AActual = Local->Areas->getElement();
+        cout<<AActual->Descripcion<<": "<<endl;
+        for (AActual->Ventanillas->goToStart(); !AActual->Ventanillas->atEnd(); AActual->Ventanillas->next())
+        {
+            auto VActual = AActual->Ventanillas->getElement();
+            cout<<"\t"<<VActual->Nombre<<": "<<VActual->Atendidos<<endl;
+        }
+    }
+    cout<<endl;
+
+    cout<<"Tiquetes solicitados por servicio: "<<endl;
+    for (Local->Servicios->goToStart(); !Local->Servicios->atEnd(); Local->Servicios->next())
+    {
+        auto SActual = Local->Servicios->getElement();
+        cout<<SActual->Nombre<<": "<<SActual->Solicitados<<endl;
+    }
+    cout<<endl;
+
+    cout<<"Tiquetes emitidos por usuario: "<<endl;
+    for (Local->TiposUsuario->goToStart(); !Local->TiposUsuario->atEnd(); Local->TiposUsuario->next())
+    {
+        auto TActual = Local->TiposUsuario->getElement();
+        cout<<TActual->Nombre<<": "<<TActual->Emitidos<<endl;
+    }
+    cout<<endl;
+    
+    system("pause");
+    system("cls");
+}
 
 #pragma region FuncsMenuUsuarios
 void AddServicio(Local* Local) {
@@ -94,7 +242,6 @@ void AgregarArea(Local* Local)
     std::getline (std::cin, Descripcion);
 
     cout << "Ingrese el codigo del area nueva: ";
-    cin.ignore();
     std::getline (std::cin, Codigo);
     
     int Ventanillas = Helpers::GetInt("Ingrese la cantidad de ventanillas: ");
@@ -127,7 +274,6 @@ int main()
     Submenu<Local>* AdminAreas = new Submenu<Local>("Areas");
     AdminAreas->AgregarOpcion(new Funcion<Local>("Agregar", AgregarArea));
     AdminAreas->AgregarOpcion(new Funcion<Local>("Modificar Ventanillas", ModificarCantidadVentanillas));
-
     
     Submenu<Local>* Admin = new Submenu<Local>("Administracion");
     Admin->AgregarOpcion(AdminUsuarios);
@@ -137,12 +283,19 @@ int main()
     //Menu Principal
     Local* MiLocal = new Local();
     Menu<Local>* MainMenu = new Menu<Local>(MiLocal, "MenuPrincipal");
+    MainMenu->AgregarOpcion(new Funcion<Local>("Estado de las Colas", MostrarColas));
+    MainMenu->AgregarOpcion(new Funcion<Local>("Conseguir Tiquete", GenerarTiquete));
+    MainMenu->AgregarOpcion(new Funcion<Local>("Atender", Atender));
     MainMenu->AgregarOpcion(Admin);
-
+    MainMenu->AgregarOpcion(new Funcion<Local>("Estadisticas del sistema", MostrarEstadisticas));
+    
     int ResultadoMenu = 0;
     while (ResultadoMenu != -1)
     {
         ResultadoMenu = MainMenu->MostrarMenu();
     }
+
+    delete MiLocal;
+    delete MainMenu;
 }
     

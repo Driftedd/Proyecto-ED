@@ -155,6 +155,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ClasesProyecto\Local.cpp" />
+    <ClCompile Include="ClasesProyecto\Stats.cpp" />
     <ClCompile Include="Proyecto0.cpp" />
     <ClCompile Include="Util\Helpers.cpp" />
     <ClCompile Include="Util\Menu\Menu.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="ClasesProyecto\Area.h" />
     <ClInclude Include="ClasesProyecto\Local.h" />
     <ClInclude Include="ClasesProyecto\Servicio.h" />
+    <ClInclude Include="ClasesProyecto\Stats.h" />
     <ClInclude Include="ClasesProyecto\TipoUsuario.h" />
     <ClInclude Include="ClasesProyecto\Tiquete.h" />
     <ClInclude Include="ClasesProyecto\Ventanilla.h" />
