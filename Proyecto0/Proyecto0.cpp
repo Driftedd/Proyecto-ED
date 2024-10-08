@@ -160,19 +160,36 @@ void MostrarEstadisticas(Local* Local)
 
 #pragma region FuncsMenuUsuarios
 void AddServicio(Local* Local) {
+    if (Local->Areas->getSize() == 0) {
+        cout << "No se pueden añadir servicios, pues no hay areas disponibles" << endl;
+        system("pause");
+        return;
+    }
     string ServicioName;
     cout << "Ingrese el nombre del servicio: ";
     cin.ignore();
     std::getline(std::cin, ServicioName);
     int Prioridad = Helpers::GetInt("Ingrese la prioridad: ");
-    Area* AreaDeServicio = Local->getAreaPos(NumServicios);
-
+    for (int i = 0; i < Local->Areas->getSize(); i++) {
+        Local->Areas->goToPos(i);
+        Area* area = Local->Areas->getElement();
+        std::cout << i + 1 << ". " << area->Descripcion << std::endl;
+    }
+    
+    
+    cout << "Ingrese la posicion del area que desea prestar al servicio: ";
+    int PosArea = Helpers::GetInt();
+    
+    Local->Areas->goToPos(PosArea-1);
+    Area* AreaDeServicio = Local->Areas->getElement();
     
 
     Local->AgregarServicio(ServicioName, Prioridad,AreaDeServicio);
     NumServicios++;
     cout << "Servicio agregado exitosamente" << endl;
     Local->Servicios->print();
+    system("pause");
+    system("cls");
 }
 void AgregarUsuario(Local* Local)
 {
@@ -189,10 +206,15 @@ void AgregarUsuario(Local* Local)
     system("cls");
 }
 void DelServicio(Local* Local) {
+    if (Local->Servicios->getSize() == 0) {
+        cout << "No se pueden eliminar servicios puesto que no hay" << endl;
+        system("pause");
+        return;
+    }
     int i = 1;
     cout << "Seleccione un servicio para eliminar" << endl;
     bool Cancelado;
-    Servicio* Seleccionado = new Servicio("", -1,Local->Areas->getElement());
+    Servicio* Seleccionado = new Servicio("", -1,nullptr);
     Helpers::GetElement(Local->Servicios, Cancelado, Seleccionado);
     if (Cancelado)
     {
@@ -206,36 +228,51 @@ void DelServicio(Local* Local) {
     NumServicios--;
     system("pause");
 }
-void MoverServicios(Local* Local, int NServicio, int NFinal) {
-    if (Local->Servicios->getSize() == 0 || Local->Servicios->getSize() < NServicio||NServicio<0) {
+void MoverServicios(Local* Local) {
+    for (int i = 0; i < Local->Servicios->getSize(); i++) {
+        Local->Servicios->goToPos(i);
+        Servicio* Serve = Local->Servicios->getElement();
+        std::cout << i + 1 << ". " << Serve->Nombre << std::endl;
+    }
+
+    int NServicio = Helpers::GetInt("Ingrese el servicio a mover: ");
+    int NFinal = Helpers::GetInt("Ingrese la nueva posición de este servicio: ");
+    if (Local->Servicios->getSize() == 0 || Local->Servicios->getSize() < NServicio||NServicio<=0) {
+        cout << "No se puede mover puesto que no hay servicios, o el servicio seleccionado es incorrecto" << endl;
         system("pause");
         return;
     }
-    if (Local->Servicios->getSize() <= NFinal) {
-        Local->Servicios->goToPos(NServicio);
+    if (NFinal>=Local->Servicios->getSize()) {
+        Local->Servicios->goToPos(NServicio-1);
         Servicio* ServicioMover= Local->Servicios->remove();
         NumServicios--;
         Local->Servicios->goToEnd();
-        Local->Servicios->append(ServicioMover);
+        Local->Servicios->insert(ServicioMover);
         NumServicios++;
     }
     else if(NFinal<=0){
-    Local->Servicios->goToPos(NServicio);
+    Local->Servicios->goToPos(NServicio-1);
     Servicio* ServicioMover = Local->Servicios->remove();
     NumServicios--;
     Local->Servicios->goToStart();
-    Local->Servicios->append(ServicioMover);
+    Local->Servicios->insert(ServicioMover);
     NumServicios++;
     }
     else {
-        Local->Servicios->goToPos(NServicio);
+        Local->Servicios->goToPos(NServicio-1);
         Servicio* ServicioMover = Local->Servicios->remove();
         NumServicios--;
-        Local->Servicios->goToPos(NFinal);
-        Local->Servicios->append(ServicioMover);
+        Local->Servicios->goToPos(NFinal-1);
+        Local->Servicios->insert(ServicioMover);
         NumServicios++;
     }
+    for (int i = 0; i < Local->Servicios->getSize(); i++) {
+        Local->Servicios->goToPos(i);
+        Servicio* Serve = Local->Servicios->getElement();
+        std::cout << i + 1 << ". " << Serve->Nombre << std::endl;
+    }
     system("pause");
+    system("cls");
 }
 
 void EliminarUsuario(Local* Local)
@@ -303,6 +340,7 @@ int main()
     Submenu<Local>* AdminServicios = new Submenu<Local>("Servicios");
     AdminServicios->AgregarOpcion(new Funcion<Local>("Agregar", AddServicio));
     AdminServicios->AgregarOpcion(new Funcion<Local>("Eliminar", DelServicio));
+    AdminServicios->AgregarOpcion(new Funcion<Local>("Cambiar orden", MoverServicios));
 
     //Areas
     Submenu<Local>* AdminAreas = new Submenu<Local>("Areas");
