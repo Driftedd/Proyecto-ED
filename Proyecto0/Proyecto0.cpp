@@ -206,6 +206,38 @@ void DelServicio(Local* Local) {
     NumServicios--;
     system("pause");
 }
+void MoverServicios(Local* Local, int NServicio, int NFinal) {
+    if (Local->Servicios->getSize() == 0 || Local->Servicios->getSize() < NServicio||NServicio<0) {
+        system("pause");
+        return;
+    }
+    if (Local->Servicios->getSize() <= NFinal) {
+        Local->Servicios->goToPos(NServicio);
+        Servicio* ServicioMover= Local->Servicios->remove();
+        NumServicios--;
+        Local->Servicios->goToEnd();
+        Local->Servicios->append(ServicioMover);
+        NumServicios++;
+    }
+    else if(NFinal<=0){
+    Local->Servicios->goToPos(NServicio);
+    Servicio* ServicioMover = Local->Servicios->remove();
+    NumServicios--;
+    Local->Servicios->goToStart();
+    Local->Servicios->append(ServicioMover);
+    NumServicios++;
+    }
+    else {
+        Local->Servicios->goToPos(NServicio);
+        Servicio* ServicioMover = Local->Servicios->remove();
+        NumServicios--;
+        Local->Servicios->goToPos(NFinal);
+        Local->Servicios->append(ServicioMover);
+        NumServicios++;
+    }
+    system("pause");
+}
+
 void EliminarUsuario(Local* Local)
 {
     int i = 1;
@@ -224,6 +256,8 @@ void EliminarUsuario(Local* Local)
     Local->VaciarTiquetes();
     system("pause");
 }
+
+
 
 void ModificarCantidadVentanillas(Local* Local)
 {
