@@ -6,6 +6,11 @@
 #include "Util/Menu/Opciones/Funcion.h"
 #include "Util/Menu/Opciones/Submenu.h"
 
+/*
+ * En este archivo se encuentra el punto de entrada al proyecto, donde se inicializa el Local y el Menu.
+ * Este archivo tambien guarda todas las funciones "listener" que el menu utiliza
+ */
+
 using std::string;
 using std::cout;
 int NumServicios = 0;
@@ -286,10 +291,6 @@ void AgregarArea(Local* Local)
 }
 #pragma endregion 
 
-#pragma region FuncsMenuPrincipal
-
-#pragma endregion 
-
 int main()
 {
     //Administracion
@@ -316,7 +317,7 @@ int main()
 
     //Menu Principal
     Local* MiLocal = new Local();
-    Menu<Local>* MainMenu = new Menu<Local>(MiLocal, "MenuPrincipal");
+    Menu<Local>* MainMenu = new Menu<Local>(MiLocal, "Menu Principal");
     MainMenu->AgregarOpcion(new Funcion<Local>("Estado de las Colas", MostrarColas));
     MainMenu->AgregarOpcion(new Funcion<Local>("Conseguir Tiquete", GenerarTiquete));
     MainMenu->AgregarOpcion(new Funcion<Local>("Atender", Atender));
