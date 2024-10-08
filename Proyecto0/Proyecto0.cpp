@@ -40,7 +40,24 @@ void AgregarUsuario(Local* Local)
     system("pause");
     system("cls");
 }
-
+void DelServicio(Local* Local) {
+    int i = 1;
+    cout << "Seleccione un servicio para eliminar" << endl;
+    bool Cancelado;
+    Servicio* Seleccionado = new Servicio("", -1,Local->Areas->getElement());
+    Helpers::GetElement(Local->Servicios, Cancelado, Seleccionado);
+    if (Cancelado)
+    {
+        cout << "Se cancelo la eliminacion" << endl;
+        system("pause");
+        return;
+    }
+    cout << "Usuario a eliminar: " << *Local->Servicios->getElement() << endl;
+    Local->Servicios->remove();
+    Local->VaciarTiquetes();
+    NumServicios--;
+    system("pause");
+}
 void EliminarUsuario(Local* Local)
 {
     int i = 1;
@@ -104,6 +121,7 @@ int main()
     //Servicios
     Submenu<Local>* AdminServicios = new Submenu<Local>("Servicios");
     AdminServicios->AgregarOpcion(new Funcion<Local>("Agregar", AddServicio));
+    AdminServicios->AgregarOpcion(new Funcion<Local>("Eliminar", DelServicio));
 
     //Areas
     Submenu<Local>* AdminAreas = new Submenu<Local>("Areas");
