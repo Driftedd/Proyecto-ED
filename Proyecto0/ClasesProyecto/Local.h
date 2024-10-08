@@ -4,6 +4,11 @@
 #include "TipoUsuario.h"
 #include "../Estructuras/Abstractas/List.h"
 
+/*
+ * Local: Esta clase sirve como administrador de todos los otros objetos necesarios para el proyecto. Facilita la
+ * coordinación entre multiples objetos, como al agregar un tiquete, ejecutando lógica en Area, Servicio y TipoUsuario
+ */
+
 class Local
 {
 public:

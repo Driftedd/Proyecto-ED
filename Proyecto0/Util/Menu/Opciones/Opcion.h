@@ -4,6 +4,11 @@
 
 using std::ostream;
 
+/*
+ * Opcion: Clase abstracta utilizada por menu, contiene una función Ejecutar() que Menu llama.
+ * Las subclases sobreescriben esta función para implementar su comportamiento
+ */
+
 template <typename E>
 class Opcion
 {

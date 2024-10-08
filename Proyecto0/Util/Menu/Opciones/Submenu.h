@@ -9,6 +9,12 @@ using std::cout;
 using std::cin;
 using std::endl;
 
+/*
+ * Submenu: Clase muy parecida a Menu que tiene un arreglo de opciones, hereda de Opcion para que
+ * se pueda incluir en Menus y otros Submenus, permitiendo crear una estructura "recursiva" donde
+ * un Menu puede llevar a un Submenu que puede contener Funciones o más Submenus
+ */
+
 template <typename E>
 class Submenu : public Opcion<E>
 {
