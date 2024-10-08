@@ -82,7 +82,20 @@ public:
             Ventanillas->clear();
         }
     }
-    
+    void EliminarTiquetesAtendidos() {
+        PriorityQueue<Tiquete*>* colaTemporal = new HeapPriorityQueue<Tiquete*>(10, true);
+        while (!Cola->isEmpty()) {
+            Tiquete* tiquete = Cola->removeMin();
+            if (tiquete->Atendido <= 0) {
+                colaTemporal->insert(tiquete, tiquete->PrioridadFinal);
+            }
+            else {
+                delete tiquete;
+            }
+        }
+        delete Cola;
+        Cola = colaTemporal;
+    }
 };
 
 

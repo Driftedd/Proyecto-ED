@@ -39,7 +39,6 @@ void MostrarColas(Local* Local)
 
 void GenerarTiquete(Local* Local)
 {
-    
     TipoUsuario* usuario = nullptr;
     Servicio* servicio = nullptr;
     bool Cancelado;
@@ -406,6 +405,49 @@ void EliminarArea(Local* Local) {
     }
 }
 
+void EliminarEstadisticas(Local* Local) {
+    char respuesta;
+    do {
+        cout << "Está seguro de querer eliminar las estadísticas? (Y/N): ";
+        cin >> respuesta;
+        respuesta = toupper(respuesta);
+        if (respuesta != 'Y' && respuesta != 'N') {
+            cout << "Entrada inválida. Por favor, ingrese 'Y' o 'N'." << endl;
+        }
+    } while (respuesta != 'Y' && respuesta != 'N');
+
+    if (respuesta == 'Y') {
+        for (int i = 0; i < Local->Areas->getSize(); i++) {
+            Local->Areas->goToPos(i);
+            Area* AreaActual = Local->Areas->getElement();
+            AreaActual->Dispensados = 0;
+            AreaActual->EliminarTiquetesAtendidos();
+            for (int j = 0; j < AreaActual->Ventanillas->getSize(); j++) {
+                AreaActual->Ventanillas->goToPos(j);
+                Ventanilla* ventanilla = AreaActual->Ventanillas->getElement();
+                ventanilla->Atendidos = 0;
+            }
+        }
+        for (int k = 0; k < Local->Servicios->getSize(); k++) {
+            Local->Servicios->goToPos(k);
+            Servicio* servicio = Local->Servicios->getElement();
+            servicio->Solicitados = 0;
+        }
+        for (int m = 0; m < Local->TiposUsuario->getSize(); m++) {
+            Local->TiposUsuario->goToPos(m);
+            TipoUsuario* usuario = Local->TiposUsuario->getElement();
+            usuario->Emitidos = 0;
+        }
+        cout << "Las estadísticas han sido eliminadas." << endl;
+        system("pause");
+        system("cls");
+    }
+    else {
+        cout << "Operación cancelada." << endl;
+        system("pause");
+        system("cls");
+    }
+}
 
 
 #pragma endregion 
@@ -435,6 +477,7 @@ int main()
     Admin->AgregarOpcion(AdminUsuarios);
     Admin->AgregarOpcion(AdminAreas);
     Admin->AgregarOpcion(AdminServicios);
+    Admin->AgregarOpcion(new Funcion<Local>("Limpiar estadisticas", EliminarEstadisticas));
 
     //Menu Principal
     Local* MiLocal = new Local();
@@ -445,6 +488,8 @@ int main()
     MainMenu->AgregarOpcion(Admin);
     MainMenu->AgregarOpcion(new Funcion<Local>("Estadisticas del sistema", MostrarEstadisticas));
     
+
+
     int ResultadoMenu = 0;
     while (ResultadoMenu != -1)
     {
