@@ -7,15 +7,13 @@
 #include "../Estructuras/Concretas/HeapPriorityQueue.h"
 #include "../Estructuras/Concretas/ArrayList.h"
 
+/*
+ * Area: Esta clase se encarga de administrar una cola y una lista de ventanillas, es administrada por Local.
+ */
+
 using std::ostream;
 using std::string;
 class Area
-
-    /*
-    * En este archivo se encuentra el punto de entrada al proyecto, donde se inicializa el Local y el Menu.
-    * Este archivo tambien guarda todas las funciones "listener" que el menu utiliza
-    */
-
 
 {
 public:
@@ -94,12 +92,7 @@ public:
         PriorityQueue<Tiquete*>* colaTemporal = new HeapPriorityQueue<Tiquete*>(10, true);
         while (!Cola->isEmpty()) {
             Tiquete* tiquete = Cola->removeMin();
-            if (tiquete->Atendido <= 0) {
-                colaTemporal->insert(tiquete, tiquete->PrioridadFinal);
-            }
-            else {
-                delete tiquete;
-            }
+            delete tiquete;
         }
         delete Cola;
         Cola = colaTemporal;
