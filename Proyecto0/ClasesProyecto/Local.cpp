@@ -1,5 +1,6 @@
 ﻿#include "Local.h"
 #include "../Estructuras/Concretas/ArrayList.h"
+#include "../Util/Helpers.h"
 
 
     /*
@@ -96,8 +97,8 @@ void Local::ModificarCantidadVentanillas() {
         Area* area = Areas->getElement();
         std::cout << i + 1 << ". " << area->Descripcion << std::endl;
     }
-    std::cout << endl << "Ingrese el numero del area que desea modificar: ";
-    std::cin >> area_seleccionada;
+    std::cout << endl;
+    area_seleccionada = Helpers::GetInt("Ingrese el numero del area que desea modificar: ");
     std::cout << endl;
 
     if (area_seleccionada < 1 || area_seleccionada > Areas->getSize()) {
@@ -108,15 +109,17 @@ void Local::ModificarCantidadVentanillas() {
     Area* area = Areas->getElement();
     int cantidad_inicial = area->Ventanillas->getSize();
     std::cout << "El area seleccionada tiene " << cantidad_inicial << " ventanillas." << std::endl;
-    std::cout << "Ingrese la nueva cantidad de ventanillas: ";
-    std::cin >> ventanillas_nuevas;
-    do {
-        std::cout << "El número ingresado debe ser mayor a 0." << endl;
-        std::cin >> ventanillas_nuevas;
-    } while (ventanillas_nuevas <= 0);
+    ventanillas_nuevas = Helpers::GetInt("Ingrese la cantidad de ventanillas: ");
+    while (ventanillas_nuevas <= 0) {
+        ventanillas_nuevas=Helpers::GetInt("El número ingresado debe ser mayor a 0: ");
+    }
 
 
     List<Ventanilla*>* ventanillas = area->Ventanillas;
+    for (ventanillas->goToStart(); !ventanillas->atEnd(); ventanillas->next())
+    {
+        delete ventanillas->getElement();
+    }
     ventanillas->clear();
 
     for (int j = 0; j < ventanillas_nuevas; j++) {
