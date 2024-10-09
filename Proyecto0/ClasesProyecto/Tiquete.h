@@ -7,6 +7,7 @@ using std::string;
 using std::ostream;
 
 /*
+ * Autor: Steven Loaíciga
  * En este archivo se maneja la clase "tiquete". Representa un espacio en las
  * colas, guarda estadisticas para su tiempo de espera.
  */

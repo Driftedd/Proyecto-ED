@@ -156,10 +156,6 @@
   <ItemGroup>
     <ClCompile Include="ClasesProyecto\Local.cpp" />
     <ClCompile Include="Proyecto0.cpp" />
-    <ClCompile Include="Util\Helpers.cpp" />
-    <ClCompile Include="Util\Menu\Menu.cpp" />
-    <ClCompile Include="Util\Menu\Opciones\Funcion.cpp" />
-    <ClCompile Include="Util\Menu\Opciones\Submenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClasesProyecto\Area.h" />

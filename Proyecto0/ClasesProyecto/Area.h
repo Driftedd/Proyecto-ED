@@ -8,6 +8,7 @@
 #include "../Estructuras/Concretas/ArrayList.h"
 
 /*
+ * Autor: Mariano Soto, Javier Vega
  * Area: Esta clase se encarga de administrar una cola y una lista de ventanillas, es administrada por Local.
  */
 

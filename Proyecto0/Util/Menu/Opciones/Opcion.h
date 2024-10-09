@@ -5,6 +5,7 @@
 using std::ostream;
 
 /*
+ * Autor: Mariano Soto
  * Opcion: Clase abstracta utilizada por menu, contiene una función Ejecutar() que Menu llama.
  * Las subclases sobreescriben esta función para implementar su comportamiento
  */

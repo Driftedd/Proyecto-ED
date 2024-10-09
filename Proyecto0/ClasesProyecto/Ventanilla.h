@@ -7,10 +7,11 @@ using std::ostream;
 using std::string;
 
 /*
-* En este archivo se aloja el objeto Ventanilla y todos sus atributos, esta es la que se encarga de atender los tiquetes.
-* Es administrada y usada por el area.
-* También hay algunas funciones básicas del objeto
-*/
+ * Autor: Mariano Soto
+ * En este archivo se aloja el objeto Ventanilla y todos sus atributos, esta es la que se encarga de atender los tiquetes.
+ * Es administrada y usada por el area.
+ * También hay algunas funciones básicas del objeto
+ */
 
 class Ventanilla
 {

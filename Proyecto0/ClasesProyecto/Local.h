@@ -5,6 +5,7 @@
 #include "../Estructuras/Abstractas/List.h"
 
 /*
+ * Autor: Steven Loaíciga, Javier Vega y Mariano Soto
  * Local: Esta clase sirve como administrador de todos los otros objetos necesarios para el proyecto. Facilita la
  * coordinación entre multiples objetos, como al agregar un tiquete, ejecutando lógica en Area, Servicio y TipoUsuario
  */

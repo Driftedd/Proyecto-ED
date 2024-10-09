@@ -8,6 +8,7 @@
 #include <limits>
 
 /*
+ * Autor: Steven Loaíciga, Javier Vega y Mariano Soto
  * En este archivo se encuentra el punto de entrada al proyecto, donde se inicializa el Local y el Menu.
  * Este archivo tambien guarda todas las funciones "listener" que el menu utiliza.
  */

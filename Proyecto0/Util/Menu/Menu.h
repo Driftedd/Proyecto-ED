@@ -10,6 +10,7 @@ using std::cin;
 using std::endl;
 
 /*
+ * Autor: Mariano Soto
  * Menu: Esta clase se utiliza como la base del menu, tiene un arreglo de opciones,
  * dependiendo de la opción que se escoja se selecciona y se llama a su función Opcion::Ejecutar()
  */

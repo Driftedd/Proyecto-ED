@@ -6,6 +6,7 @@ using std::string;
 using std::ostream;
 
 /*
+ * Autor: Javier Vega
  * En este archivo se aloja la clase "TipoUsuario", contiene atributos con los que trabajar los métodos.
  * Es uno de los 2 elemetos que se toman en cuenta para determinar prioridad en una cola.
  */
