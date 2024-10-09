@@ -1,6 +1,13 @@
 ﻿#include "Local.h"
 #include "../Estructuras/Concretas/ArrayList.h"
 
+
+    /*
+    * Aquí se encuentran muchas de las funciones usadas en el codigo principal, pues el local es el "centro" de todo.
+    * También se encuentran distintas listas para permitir el acceso a todos los objetos creados.
+    */
+
+
 Local::Local()
 {
     Areas = new ArrayList<Area*>(10, true);

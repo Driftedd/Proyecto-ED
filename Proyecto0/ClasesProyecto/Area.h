@@ -10,6 +10,13 @@
 using std::ostream;
 using std::string;
 class Area
+
+    /*
+    * En este archivo se encuentra el punto de entrada al proyecto, donde se inicializa el Local y el Menu.
+    * Este archivo tambien guarda todas las funciones "listener" que el menu utiliza
+    */
+
+
 {
 public:
     string Descripcion;
