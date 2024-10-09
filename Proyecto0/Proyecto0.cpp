@@ -172,7 +172,7 @@ void AddServicio(Local* Local) {
     }
     string ServicioName;
     cout << "Ingrese el nombre del servicio: ";
-    cin.ignore();
+    //cin.ignore();
     std::getline(std::cin, ServicioName);
     int Prioridad = Helpers::GetInt("Ingrese la prioridad: ");
     for (int i = 0; i < Local->Areas->getSize(); i++) {
@@ -202,7 +202,7 @@ void AgregarUsuario(Local* Local)
 {
     string Nombre;
     cout << "Ingrese el nombre del tipo de usuario: ";
-    cin.ignore();
+    //cin.ignore();
     std::getline (std::cin, Nombre);
 
     int Prioridad = Helpers::GetInt("Ingrese la prioridad: ");
@@ -333,7 +333,7 @@ void AgregarArea(Local* Local)
     string Codigo;
 
     cout << "Ingrese la descripcion del area nueva: ";
-    cin.ignore();
+    //cin.ignore();
     std::getline (std::cin, Descripcion);
 
     cout << "Ingrese el codigo del area nueva: ";
