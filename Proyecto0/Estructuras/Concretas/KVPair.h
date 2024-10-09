@@ -43,6 +43,13 @@ public:
 
 template <typename K, typename V>
 ostream& operator <<(ostream& os, const KVPair<K, V>& pair) {
-	os << "(" << pair.key << ", " << pair.value << ")";
+	if (std::is_pointer<V>::value)
+	{
+		os << "(" << pair.key << ", " << *pair.value << ")";	
+	}
+	else
+	{
+		os << "(" << pair.key << ", " << pair.value << ")";	
+	}
 	return os;
 }
