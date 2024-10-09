@@ -182,6 +182,11 @@ void AddServicio(Local* Local) {
     }
     cout << "Ingrese la posicion del area que desea prestar al servicio: ";
     int PosArea = Helpers::GetInt();
+    if (PosArea <= 0 || PosArea > Local->Areas->getSize()) {
+        cout << "Area invalida o inexistente" << endl; 
+        system("pause");
+        return;
+    }
     Local->Areas->goToPos(PosArea - 1);
     Area* AreaDeServicio = Local->Areas->getElement();
     Local->AgregarServicio(ServicioName, Prioridad, AreaDeServicio);
