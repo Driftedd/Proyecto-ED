@@ -52,7 +52,21 @@ public:
                 i++;
             }
             std::cout << "\t" <<ExitValue<<". Salir\n";
-            std::cin >> SelectedOption;
+
+            //Recibir entrada
+            std::string Entrada;
+            std::getline(cin, Entrada);
+            try
+            {
+                SelectedOption = std::stoi(Entrada);
+            }
+            catch (...)
+            {
+                system("cls");
+                std::cout<<"\n Error, Ingrese una opcion entre 1 y "<<Opciones->getSize()<<"\n";
+                continue;
+            }
+            
             if (SelectedOption < 0 || SelectedOption > Opciones->getSize())
             {
                 system("cls");
