@@ -39,6 +39,6 @@ public:
 };
 
 inline ostream& operator <<(ostream& os, const Tiquete& tiquete) {
-    os << "(" << tiquete.Codigo << ", " << ")";
+    os << "( "<< tiquete.Codigo<<" )";
     return os;
 }
