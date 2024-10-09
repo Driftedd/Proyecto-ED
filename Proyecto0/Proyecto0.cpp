@@ -222,35 +222,31 @@ void DelServicio(Local* Local) {
     int i = 1;
     cout << "Seleccione un servicio para eliminar" << endl;
     bool Cancelado;
-    Servicio* Seleccionado = new Servicio("", -1, nullptr);
+    Servicio* Seleccionado = nullptr;
     Helpers::GetElement(Local->Servicios, Cancelado, Seleccionado);
-    if (Cancelado)
+    if (!Cancelado)
     {
-        cout << "Se cancelo la eliminacion" << endl;
+        
         if (Local->Servicios->getSize() > 0) {
-            cout << "Seleccione un servicio para eliminar:" << endl;
-            bool Cancelado;
-            Servicio* Seleccionado = new Servicio("", -1, Local->Areas->getElement());
-            Helpers::GetElement(Local->Servicios, Cancelado, Seleccionado);
-            if (Cancelado) {
-                cout << "Se canceló la eliminación." << endl;
-                system("pause");
-                delete Seleccionado;
-                return;
-            }
             cout << "Servicio a eliminar: " << *Local->Servicios->getElement() << endl;
             Local->Servicios->remove();
             Local->VaciarTiquetes();
             NumServicios--;
             system("pause");
-            delete Seleccionado;
+            system("cls");
+            return;
         }
         else {
             cout << "No hay servicios disponibles para eliminar." << endl;
             system("pause");
             system("cls");
+            return;
         }
     }
+    cout << "Se cancelo la eliminacion" << endl;
+    system("pause");
+    system("cls");
+    return;
 }
 
 void MoverServicios(Local* Local) {
@@ -305,7 +301,7 @@ void EliminarUsuario(Local* Local)
     int i = 1;
     cout<<"Seleccione un usuario para eliminar"<<endl;
     bool Cancelado;
-    TipoUsuario* Seleccionado = new TipoUsuario("", -1);
+    TipoUsuario* Seleccionado = nullptr;
     Helpers::GetElement(Local->TiposUsuario, Cancelado, Seleccionado);
     if (Cancelado)
     {

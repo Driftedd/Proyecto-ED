@@ -110,6 +110,11 @@ void Local::ModificarCantidadVentanillas() {
     std::cout << "El area seleccionada tiene " << cantidad_inicial << " ventanillas." << std::endl;
     std::cout << "Ingrese la nueva cantidad de ventanillas: ";
     std::cin >> ventanillas_nuevas;
+    do {
+        std::cout << "El número ingresado debe ser mayor a 0." << endl;
+        std::cin >> ventanillas_nuevas;
+    } while (ventanillas_nuevas <= 0);
+
 
     List<Ventanilla*>* ventanillas = area->Ventanillas;
     ventanillas->clear();
