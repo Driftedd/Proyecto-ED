@@ -52,7 +52,19 @@ public:
             }
             std::cout << "\t" << "0. Salir\n";
 
-            std::cin >> SelectedOption;
+            std::string Entrada;
+            std::getline(std::cin, Entrada);
+            try
+            {
+                SelectedOption = std::stoi(Entrada);
+            }
+            catch (...)
+            {
+                system("cls");
+                std::cout<<"\n Error, Ingrese una opcion entre 1 y "<<Lista->getSize()<<"\n";
+                continue;
+            }
+            
             if (SelectedOption == 0)
             {
                 Cancelado = true;
