@@ -185,6 +185,7 @@ void AddServicio(Local* Local) {
     if (PosArea <= 0 || PosArea > Local->Areas->getSize()) {
         cout << "Area invalida o inexistente" << endl; 
         system("pause");
+        system("cls");
         return;
     }
     Local->Areas->goToPos(PosArea - 1);
