@@ -8,6 +8,7 @@ using std::ostream;
 
 /*
  * En este archivo se alojan los objetos de tipo "Servicio", los atributos del mismo y un puntero al area asignada.
+ * El servicio se utiliza para determinar el area que corresponde a un tiquete y la prioridad del mismo.
  * También se incluyen funciones muy básicas para esta clase.
  */
 

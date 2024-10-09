@@ -7,7 +7,7 @@ using std::ostream;
 
 /*
  * En este archivo se aloja la clase "TipoUsuario", contiene atributos con los que trabajar los métodos.
- * También se incluyen funciones muy básicas para esta clase.
+ * Es uno de los 2 elemetos que se toman en cuenta para determinar prioridad en una cola.
  */
 
 
