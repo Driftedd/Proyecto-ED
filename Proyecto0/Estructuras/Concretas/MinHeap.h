@@ -2,6 +2,7 @@
 #define DEFAULT_MAX 1024
 
 #include <stdexcept>
+#include <type_traits>
 #include <iostream>
 
 using std::runtime_error;
@@ -106,15 +107,10 @@ public:
 		return size;
 	}
 	void print() {
-		int temp = 0;
+		cout << "[ ";
 		for (int i = 0; i < size; i++) {
-			if (i == temp) {
-    			cout << (i != 0? "]" : "") << "\n[ ";
-				temp = temp * 2 + 1;
-			}
 			cout << elements[i] << " ";
 		}
-
 		cout << "]\n";
 	}
 };

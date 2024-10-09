@@ -39,9 +39,17 @@ void MostrarColas(Local* Local)
 
 void GenerarTiquete(Local* Local)
 {
+    if (Local->TiposUsuario->getSize() == 0 || Local->Servicios->getSize() == 0)
+    {
+        cout<<"No hay tipos de usuario o servicios para escojer"<<endl;
+        system("pause");
+        system("cls");
+        return;
+    }
     TipoUsuario* usuario = nullptr;
     Servicio* servicio = nullptr;
     bool Cancelado;
+    cout<<"Seleccione su tipo de usuario:"<<endl;
     Helpers::GetElement<TipoUsuario*>(Local->TiposUsuario, Cancelado, usuario);
     if (Cancelado)
     {
@@ -50,6 +58,7 @@ void GenerarTiquete(Local* Local)
         system("cls");
         return;
     }
+    cout<<"Seleccione su servicio:"<<endl;
     Helpers::GetElement<Servicio*>(Local->Servicios, Cancelado, servicio);
     if (Cancelado)
     {
@@ -118,7 +127,14 @@ void MostrarEstadisticas(Local* Local)
     for (Local->Areas->goToStart(); !Local->Areas->atEnd(); Local->Areas->next())
     {
         auto AActual = Local->Areas->getElement();
-        cout<<AActual->Descripcion<<": "<<AActual->GetEsperaPromedio()<<endl;
+        if (AActual->GetTotalAtendidos() == 0)
+        {
+            cout<< AActual->Descripcion << ": NA" << endl;
+        }
+        else
+        {
+            cout << AActual->Descripcion << ": " << AActual->GetEsperaPromedio() << endl;    
+        }
     }
     cout<<endl;
     
