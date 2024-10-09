@@ -72,6 +72,7 @@ public:
     }
     float GetEsperaPromedio()
     {
+        if (GetTotalAtendidos() == 0) return 0;
         return GetTiempoEsperaTotal()/((float)GetTotalAtendidos());
     }
     void AtenderSiguiente(Ventanilla* ventanilla)
