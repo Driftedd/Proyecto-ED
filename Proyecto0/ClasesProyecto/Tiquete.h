@@ -6,6 +6,12 @@
 using std::string;
 using std::ostream;
 
+/*
+ * En este archivo se maneja la clase "tiquete".
+ * Aquí se encuentran los atributos y algunas funciones básicas.
+ */
+
+
 class Tiquete
 {
 public:

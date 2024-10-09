@@ -9,7 +9,7 @@
 
 /*
  * En este archivo se encuentra el punto de entrada al proyecto, donde se inicializa el Local y el Menu.
- * Este archivo tambien guarda todas las funciones "listener" que el menu utiliza
+ * Este archivo tambien guarda todas las funciones "listener" que el menu utiliza.
  */
 
 using std::string;

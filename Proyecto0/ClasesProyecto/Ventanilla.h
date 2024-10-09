@@ -7,6 +7,11 @@ using std::ostream;
 
 using std::string;
 class Ventanilla
+
+    /*
+    * En este archivo se aloja el objeto Ventanilla y todos sus atributos.
+    * También hay algunas funciones básicas del objeto.
+    */
 {
 public:
     string Nombre;

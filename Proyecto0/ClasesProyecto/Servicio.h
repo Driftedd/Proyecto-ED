@@ -6,6 +6,11 @@
 using std::string;
 using std::ostream;
 
+/*
+ * En este archivo se alojan los objetos de tipo "Servicio", los atributos del mismo y un puntero al area asignada.
+ * También se incluyen funciones muy básicas para esta clase.
+ */
+
 class Servicio
 {
 public:

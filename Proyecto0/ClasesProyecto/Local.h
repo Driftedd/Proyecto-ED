@@ -26,7 +26,7 @@ public:
     Tiquete* AgregarTiquete(Servicio* servicio, TipoUsuario* usuario);
     void VaciarTiquetes();
     void EliminarTipoUsuario();
-    void EliminarServicio();//Ya lo hice sin modificar el lical, entonces...?
+    void EliminarServicio();
     void EliminarArea();
     Area* getAreaPos(int Lugar);
     void ModificarCantidadVentanillas();
